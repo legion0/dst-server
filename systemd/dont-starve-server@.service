@@ -1,5 +1,5 @@
 [Unit]
-Description=Don't Starve Together Server - %i
+Description=Don't Starve Together Server - XXX_CLUSTER_NAME_XXX - %i
 After=network-online.target
 RequiresMountsFor=/mnt/steamGames /var/lib/dst
 
@@ -7,7 +7,7 @@ RequiresMountsFor=/mnt/steamGames /var/lib/dst
 ExecStart=/mnt/steamGames/dst/bin64/dontstarve_dedicated_server_nullrenderer_x64 -console -cluster XXX_CLUSTER_NAME_XXX -shard %i
 WorkingDirectory=/mnt/steamGames/dst/bin64
 User=dst
-SyslogIdentifier=DST-%i
+SyslogIdentifier=DST-XXX_CLUSTER_NAME_XXX-%i
 ProtectHome=true
 PrivateTmp=true
 ProtectControlGroups=true
