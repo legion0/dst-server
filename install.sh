@@ -29,6 +29,11 @@ XXX_CLUSTER_KEY_XXX
 
 echo "# Creating Cluster"
 
+echo -n "Cluster Id: (default: cluster-1)"
+read cluster_id
+cluster_id="${cluster_id:="cluster-1"}"
+echo "Cluster Id = ${cluster_id}"
+
 echo -n "Cluster Name: (default: Cluster_1)"
 read cluster_name
 cluster_name="${cluster_name:=Cluster_1}"
@@ -41,4 +46,8 @@ echo "Cluster Password = ${cluster_password}"
 cluster_key="$(openssl rand -hex 16)"
 
 echo "# Linking systemd/dont-starve-server@.service"
-ln -s  "${SCRIPT_DIR}systemd/dont-starve-server@.service" "/etc/systemd/system/dont-starve-server@.service"
+sed -i -e "s/XXX_CLUSTER_NAME_XXX/${cluster_name}/g" "${SCRIPT_DIR}systemd/dont-starve-server@.service" > "/etc/systemd/system/dont-starve-server@.service"
+
+"${SCRIPT_DIR}/dst_service_enable.sh"
+
+"${SCRIPT_DIR}/dst_service_start.sh"
