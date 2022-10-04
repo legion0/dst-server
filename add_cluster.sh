@@ -40,7 +40,6 @@ echo "Server Token = ${cluster_token}"
 
 echo "# Copying cluster files"
 sudo cp -r "${SCRIPT_DIR}/cluster_config" "${SETTINGS_DIR}/${cluster_name}"
-sudo chown dst:dst "${SETTINGS_DIR}/${cluster_name}"
 
 echo "Updating cluster token"
 echo "${cluster_token}" | sudo tee "${SETTINGS_DIR}/${cluster_name}/cluster_token.txt" >/dev/null
@@ -50,3 +49,5 @@ sudo sed -i -e "s/XXX_SERVER_NAME_XXX/${server_name}/g" \
   -e "s/XXX_SERVER_PASSWORD_XXX/${server_password}/g" \
   -e "s/XXX_CLUSTER_KEY_XXX/${cluster_key}/g" \
   "${SETTINGS_DIR}/${cluster_name}/cluster.ini"
+
+sudo chown -R dst:dst "${SETTINGS_DIR}/${cluster_name}"
