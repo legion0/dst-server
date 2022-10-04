@@ -4,50 +4,52 @@ set -euo pipefail
 
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
-echo  "Not Implemented !!!"
-exit 1
+DST_STEAM_APP_ID="343050"
+DST_INSTALL_DIR="/home/steam/steamapps/dst"
+STEAMCMD_PATH="/usr/games/steamcmd"
+SETTINGS_DIR="/home/steam/.klei/DoNotStarveTogether/MidWeekDST"
+# dontstarve_dedicated_server_nullrenderer_x64
 
-DST_STEAM_APP_ID=343050
+sudo apt-get update && sudo apt-get upgrade -y
+sudo apt install -y tmux git
+sudo dpkg --add-architecture i386
+sudo apt-get update && sudo apt-get upgrade -y
+sudo apt install -y software-properties-common
+sudo add-apt-repository -y multiverse
+sudo apt install -y steamcmd lib32stdc++6 libc6-i386 libcurl4-gnutls-dev:i386 lib32gcc-s1 libsdl2-2.0-0:i386
 
-dpkg --add-architecture i386
-apt-get update && apt-get upgrade -y
-sudo apt install software-properties-common
-sudo add-apt-repository multiverse
+echo "Creating the dst user"
 
-sudo apt install tmux git lib32gcc1 lib32stdc++6 libcurl4-gnutls-dev:i386 lib32gcc-s1 steamcmd
+sudo useradd -ms /bin/bash dst
 
-SETTINGS_DIR=/home/steam/.klei/DoNotStarveTogether/MidWeekDST
-GAME_INSTALL_DIR=/home/steam/steamapps/dst
-SERVER_MODS_DIR="${GAME_INSTALL_DIR}/mods"
-GAME_BIN_PATH="${GAME_INSTALL_DIR}/bin64/dontstarve_dedicated_server_nullrenderer_x64"
+echo "Copying install files"
 
-useradd -ms /bin/bash/ dst
+sudo cp "${SCRIPT_DIR}/dst_update.sh" "/home/dst/dst_update.sh"
+sudo chown dst:dst "/home/dst/dst_update.sh"
 
-XXX_CLUSTER_NAME_XXX
-XXX_CLUSTER_PASSWORD_XXX
-XXX_CLUSTER_KEY_XXX
+sudo cp "${SCRIPT_DIR}/dst_start.sh" "/home/dst/dst_start.sh"
+sudo chown dst:dst "/home/dst/dst_start.sh"
 
-echo "# Creating Cluster"
+echo "Starting sudo shell to instal game as the dst user, please run:"
+echo '~/dst_update.sh; exit $?'
+sudo -u dst -s
 
-echo -n "Cluster Id: (default: cluster-1)"
-read cluster_id
-cluster_id="${cluster_id:="cluster-1"}"
-echo "Cluster Id = ${cluster_id}"
 
-echo -n "Cluster Name: (default: Cluster_1)"
-read cluster_name
-cluster_name="${cluster_name:=Cluster_1}"
-echo "Cluster Name = ${cluster_name}"
+echo ""
+echo "# Creating Game Server Configuration"
+echo ""
 
-echo -n "Cluster Password: (default: none)"
-read cluster_password
-echo "Cluster Password = ${cluster_password}"
+"./add_cluster.sh"
 
-cluster_key="$(openssl rand -hex 16)"
+# TODO: Install mods
+# TODO: Install systemd
 
-echo "# Linking systemd/dont-starve-server@.service"
-sed -i -e "s/XXX_CLUSTER_NAME_XXX/${cluster_name}/g" "${SCRIPT_DIR}systemd/dont-starve-server@.service" > "/etc/systemd/system/dont-starve-server@.service"
+# echo "# Linking systemd/dont-starve-server@.service"
+# sed -e "s/XXX_CLUSTER_NAME_XXX/${cluster_name}/g" "${SCRIPT_DIR}systemd/dont-starve-server@.service" > "/etc/systemd/system/dont-starve-server@.service"
 
-"${SCRIPT_DIR}/dst_service_enable.sh"
+# "${SCRIPT_DIR}/dst_service_enable.sh"
 
-"${SCRIPT_DIR}/dst_service_start.sh"
+# "${SCRIPT_DIR}/dst_service_start.sh"
+
+
+# sudo chown dst:dst ...

@@ -4,7 +4,7 @@ After=network-online.target
 RequiresMountsFor=/mnt/steamGames /var/lib/dst
 
 [Service]
-ExecStart=/mnt/steamGames/dst/bin64/dontstarve_dedicated_server_nullrenderer_x64 -console -cluster XXX_CLUSTER_NAME_XXX -shard %i
+ExecStart=/mnt/steamGames/dst/bin64/dontstarve_dedicated_server_nullrenderer_x64 -cluster XXX_CLUSTER_NAME_XXX -shard %i
 WorkingDirectory=/mnt/steamGames/dst/bin64
 User=dst
 SyslogIdentifier=DST-XXX_CLUSTER_NAME_XXX-%i

@@ -1,3 +1,7 @@
 # dst-server
 
-./dontstarve_dedicated_server_nullrenderer -cluster DSTWhalesCluster -shard "$SHARD_NAME"
+# Install
+
+```sh
+git clone https://github.com/legion0/dst-server.git && ./dst-server/install.sh
+```
