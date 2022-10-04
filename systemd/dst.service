@@ -24,4 +24,4 @@ CapabilityBoundingSet=
 Slice=dst-XXX_CLUSTER_NAME_XXX.slice
 
 [Install]
-WantedBy=dst-XXX_CLUSTER_NAME_XXX.slice
+WantedBy=multi-user.target
