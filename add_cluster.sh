@@ -4,10 +4,10 @@ set -euo pipefail
 
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
-DST_STEAM_APP_ID="343050"
-DST_INSTALL_DIR="/home/steam/steamapps/dst"
-STEAMCMD_PATH="/usr/games/steamcmd"
-SETTINGS_DIR="/home/steam/.klei/DoNotStarveTogether/MidWeekDST"
+# DST_STEAM_APP_ID="343050"
+# DST_INSTALL_DIR="/home/dst/steamapps/dst"
+# STEAMCMD_PATH="/usr/games/steamcmd"
+SETTINGS_DIR="/home/dst/.klei/DoNotStarveTogether"
 
 echo -n "Game Server Name: (default: ${USER} DST Server)"
 read server_name
