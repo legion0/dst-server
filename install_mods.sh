@@ -21,6 +21,7 @@ while [[ "${install_more_mods}" == "y" ]]; do
 
     echo "Enabling mod"
     echo "ServerModSetup(\"${mod_id}\") -- ${mod_name}" | sudo tee -a "${DST_INSTALL_DIR}/mods/dedicated_server_mods_setup.lua" >/dev/null
+    sudo chown -R dst:dst "${DST_INSTALL_DIR}/mods"
 
     echo "Enabling mod override for ${cluster_name}"
     sudo sed -i -e "s/    -- XXX_ADD_MODS_HERE_XXX/    \[\"workshop-${mod_id}\"\]={ enabled=true },  -- ${mod_name}\n    -- XXX_ADD_MODS_HERE_XXX/g" "${SETTINGS_DIR}/${cluster_name}/Master/modoverrides.lua"
