@@ -4,6 +4,7 @@ set -euo pipefail
 DST_INSTALL_DIR="/home/dst/steamapps/dst"
 SETTINGS_DIR="/home/dst/.klei/DoNotStarveTogether"
 
+echo "Select Cluster Name:"
 select cluster_name in $(sudo ls "${SETTINGS_DIR}");
 do sudo test -n "$cluster_name" && break;
 echo ">>> Invalid Selection"; 
@@ -19,7 +20,7 @@ while [[ "${install_more_mods}" == "y" ]]; do
     # TODO: check if mod is already installed
 
     echo "Enabling mod"
-    sudo echo "ServerModSetup(\"${mod_id}\") -- ${mod_name}" | tee -a "${DST_INSTALL_DIR}/mods/dedicated_server_mods_setup.lua" >/dev/null
+    echo "ServerModSetup(\"${mod_id}\") -- ${mod_name}" | sudo tee -a "${DST_INSTALL_DIR}/mods/dedicated_server_mods_setup.lua" >/dev/null
 
     echo "Enabling mod override for ${cluster_name}"
     sudo -i sed -e "s/    -- XXX_ADD_MODS_HERE_XXX/    \[\"workshop-${mod_id}\"\]={ enabled=true },  -- ${mod_name}\n    -- XXX_ADD_MODS_HERE_XXX/g" "${SETTINGS_DIR}/${cluster_name}/Master/modoverrides.lua"
