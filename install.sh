@@ -5,9 +5,9 @@ set -euo pipefail
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 DST_STEAM_APP_ID="343050"
-DST_INSTALL_DIR="/home/steam/steamapps/dst"
+DST_INSTALL_DIR="/home/dst/steamapps/dst"
 STEAMCMD_PATH="/usr/games/steamcmd"
-SETTINGS_DIR="/home/steam/.klei/DoNotStarveTogether/MidWeekDST"
+SETTINGS_DIR="/home/steam/.klei/DoNotStarveTogether"
 # dontstarve_dedicated_server_nullrenderer_x64
 
 sudo apt-get update && sudo apt-get upgrade -y
@@ -40,16 +40,3 @@ echo "# Creating Game Server Configuration"
 echo ""
 
 "${SCRIPT_DIR}/add_cluster.sh"
-
-# TODO: Install mods
-# TODO: Install systemd
-
-# echo "# Linking systemd/dont-starve-server@.service"
-# sed -e "s/XXX_CLUSTER_NAME_XXX/${cluster_name}/g" "${SCRIPT_DIR}systemd/dont-starve-server@.service" > "/etc/systemd/system/dont-starve-server@.service"
-
-# "${SCRIPT_DIR}/dst_service_enable.sh"
-
-# "${SCRIPT_DIR}/dst_service_start.sh"
-
-
-# sudo chown dst:dst ...

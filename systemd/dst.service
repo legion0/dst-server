@@ -1,0 +1,27 @@
+[Unit]
+Description=Don't Starve Together Server - XXX_CLUSTER_NAME_XXX - XXX_SHARD_XXX
+After=network-online.target
+RequiresMountsFor=/home/dst
+
+[Service]
+ExecStart=/home/dst/steamapps/dst/bin64/dontstarve_dedicated_server_nullrenderer_x64 -cluster XXX_CLUSTER_NAME_XXX -shard XXX_SHARD_XXX
+WorkingDirectory=/home/dst/steamapps/dst/bin64
+User=dst
+SyslogIdentifier=DST-XXX_CLUSTER_NAME_XXX-XXX_SHARD_XXX
+ProtectHome=false
+PrivateTmp=true
+ProtectControlGroups=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+PrivateDevices=true
+ProtectSystem=strict
+PrivateUsers=true
+StateDirectory=dst
+InaccessiblePaths=/boot
+ReadWritePaths=/home/dst/steamapps/dst
+SystemCallFilter=~@clock @cpu-emulation @debug @keyring @mount @privileged @obsolete @raw-io @reboot @swap
+CapabilityBoundingSet=
+Slice=dst-XXX_CLUSTER_NAME_XXX.slice
+
+[Install]
+WantedBy=dst-XXX_CLUSTER_NAME_XXX.slice

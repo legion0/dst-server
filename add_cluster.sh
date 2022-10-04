@@ -51,3 +51,20 @@ sudo sed -i -e "s/XXX_SERVER_NAME_XXX/${server_name}/g" \
   "${SETTINGS_DIR}/${cluster_name}/cluster.ini"
 
 sudo chown -R dst:dst "${SETTINGS_DIR}/${cluster_name}"
+
+# TODO: Install mod overrides and server mod if needed.
+
+echo "# Registering with systemd"
+echo ""
+echo -n "Would you like to start this cluster when the machine boots? (y/n): "
+read answer
+if [[ "${answer}" == "y" ]]; then
+
+  echo "Creating /etc/systemd/system/dst-${cluster_name}-Master.service"
+  sed -e "s/XXX_CLUSTER_NAME_XXX/${cluster_name}/g" -e "s/XXX_SHARD_XXX/Master/g" "${SCRIPT_DIR}systemd/dst.service" | sudo tee "/etc/systemd/system/dst-${cluster_name}-Master.service" >/dev/null
+  echo "Creating /etc/systemd/system/dst-${cluster_name}-Caves.service"
+  sed -e "s/XXX_CLUSTER_NAME_XXX/${cluster_name}/g" -e "s/XXX_SHARD_XXX/Caves/g" "${SCRIPT_DIR}systemd/dst.service" | sudo tee "/etc/systemd/system/dst-${cluster_name}-Caves.service" >/dev/null
+  echo "Enabling services on startup"
+  sudo systemctl enable dst-${cluster_name}-Master.service dst-${cluster_name}-Caves.service
+  sudo systemctl start "dst-${cluster_name}.slice"
+fi
