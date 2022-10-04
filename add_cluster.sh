@@ -34,9 +34,16 @@ echo "Game Server Password = ${server_password}"
 cluster_key="$(openssl rand -hex 16)"
 echo "Cluster Key = ${cluster_key}"
 
+echo "Please get a Server Token from https://accounts.klei.com/account/game/servers?game=DontStarveTogether:"
+read cluster_token
+echo "Server Token = ${cluster_token}"
+
 echo "# Copying cluster files"
 sudo cp -r "${SCRIPT_DIR}/cluster_config" "${SETTINGS_DIR}/${cluster_name}"
 sudo chown dst:dst "${SETTINGS_DIR}/${cluster_name}"
+
+echo "Updating cluster token"
+echo "${cluster_token}" > "${SETTINGS_DIR}/${cluster_name}/cluster_token.txt"
 
 echo "Updating cluster.ini config"
 sudo sed -i -e "s/XXX_SERVER_NAME_XXX/${server_name}/g" \

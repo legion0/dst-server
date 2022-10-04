@@ -39,7 +39,7 @@ echo ""
 echo "# Creating Game Server Configuration"
 echo ""
 
-"./add_cluster.sh"
+"${SCRIPT_DIR}/add_cluster.sh"
 
 # TODO: Install mods
 # TODO: Install systemd
