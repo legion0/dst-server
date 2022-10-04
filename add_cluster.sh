@@ -52,7 +52,8 @@ sudo sed -i -e "s/XXX_SERVER_NAME_XXX/${server_name}/g" \
 
 sudo chown -R dst:dst "${SETTINGS_DIR}/${cluster_name}"
 
-# TODO: Install mod overrides and server mod if needed.
+echo "# Installing mods"
+"${SCRIPT_DIR}/install_mods.sh"
 
 echo "# Registering with systemd"
 echo ""
