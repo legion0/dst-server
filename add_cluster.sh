@@ -43,7 +43,7 @@ sudo cp -r "${SCRIPT_DIR}/cluster_config" "${SETTINGS_DIR}/${cluster_name}"
 sudo chown dst:dst "${SETTINGS_DIR}/${cluster_name}"
 
 echo "Updating cluster token"
-echo "${cluster_token}" > "${SETTINGS_DIR}/${cluster_name}/cluster_token.txt"
+echo "${cluster_token}" | sudo tee "${SETTINGS_DIR}/${cluster_name}/cluster_token.txt"
 
 echo "Updating cluster.ini config"
 sudo sed -i -e "s/XXX_SERVER_NAME_XXX/${server_name}/g" \
