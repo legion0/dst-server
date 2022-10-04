@@ -18,7 +18,11 @@ while [[ "${install_more_mods}" == "y" ]]; do
     read mod_name
     # TODO: check if mod is already installed
 
-    sed -i -e "s/    -- XXX_ADD_MODS_HERE_XXX/"[\"workshop-${mod_id}\"]={ enabled=true },  -- ${mod_name}"\n    -- XXX_ADD_MODS_HERE_XXX/g" "${SETTINGS_DIR}/${cluster_name}/Master/modoverrides.lua"
+    echo "Enabling mod"
+    sudo echo "ServerModSetup(\"${mod_id}\") -- ${mod_name}" | tee -a "${DST_INSTALL_DIR}/mods/dedicated_server_mods_setup.lua" >/dev/null
+
+    echo "Enabling mod override for ${cluster_name}"
+    sudo -i sed -e "s/    -- XXX_ADD_MODS_HERE_XXX/    \[\"workshop-${mod_id}\"\]={ enabled=true },  -- ${mod_name}\n    -- XXX_ADD_MODS_HERE_XXX/g" "${SETTINGS_DIR}/${cluster_name}/Master/modoverrides.lua"
     sudo cp -f "${SETTINGS_DIR}/${cluster_name}/Master/modoverrides.lua" "${SETTINGS_DIR}/${cluster_name}/Caves/modoverrides.lua"
     sudo chown -R dst:dst "${SETTINGS_DIR}/${cluster_name}"
 
