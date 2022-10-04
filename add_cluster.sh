@@ -61,9 +61,9 @@ read answer
 if [[ "${answer}" == "y" ]]; then
 
   echo "Creating /etc/systemd/system/dst-${cluster_name}-Master.service"
-  sed -e "s/XXX_CLUSTER_NAME_XXX/${cluster_name}/g" -e "s/XXX_SHARD_XXX/Master/g" "${SCRIPT_DIR}systemd/dst.service" | sudo tee "/etc/systemd/system/dst-${cluster_name}-Master.service" >/dev/null
+  sed -e "s/XXX_CLUSTER_NAME_XXX/${cluster_name}/g" -e "s/XXX_SHARD_XXX/Master/g" "${SCRIPT_DIR}/systemd/dst.service" | sudo tee "/etc/systemd/system/dst-${cluster_name}-Master.service" >/dev/null
   echo "Creating /etc/systemd/system/dst-${cluster_name}-Caves.service"
-  sed -e "s/XXX_CLUSTER_NAME_XXX/${cluster_name}/g" -e "s/XXX_SHARD_XXX/Caves/g" "${SCRIPT_DIR}systemd/dst.service" | sudo tee "/etc/systemd/system/dst-${cluster_name}-Caves.service" >/dev/null
+  sed -e "s/XXX_CLUSTER_NAME_XXX/${cluster_name}/g" -e "s/XXX_SHARD_XXX/Caves/g" "${SCRIPT_DIR}/systemd/dst.service" | sudo tee "/etc/systemd/system/dst-${cluster_name}-Caves.service" >/dev/null
   echo "Enabling services on startup"
   sudo systemctl enable dst-${cluster_name}-Master.service dst-${cluster_name}-Caves.service
   sudo systemctl start "dst-${cluster_name}.slice"
