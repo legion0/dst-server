@@ -30,9 +30,12 @@ sudo chown dst:dst "/home/dst/dst_update.sh"
 sudo cp "${SCRIPT_DIR}/dst_start.sh" "/home/dst/dst_start.sh"
 sudo chown dst:dst "/home/dst/dst_start.sh"
 
-echo "Starting sudo shell to instal game as the dst user, please run:"
-echo '~/dst_update.sh; exit $?'
-sudo -u dst -s
+# echo "Starting sudo shell to instal game as the dst user, please run:"
+# echo '~/dst_update.sh; exit $?'
+# sudo -u dst -s
+
+echo "Starting sudo shell to instal game as the dst user"
+sudo -u dst /bin/bash -c '~/dst_update.sh'
 
 
 echo ""

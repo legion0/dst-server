@@ -12,4 +12,4 @@ mkdir -p "${DST_INSTALL_DIR}"
 
 cd "${DST_INSTALL_DIR}/bin64"
 
-./dontstarve_dedicated_server_nullrenderer_x64 --only_update_server_mods
+# ./dontstarve_dedicated_server_nullrenderer_x64 --only_update_server_mods
