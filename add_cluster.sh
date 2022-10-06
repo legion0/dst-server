@@ -38,6 +38,8 @@ echo "Please get a Server Token from https://accounts.klei.com/account/game/serv
 read cluster_token
 echo "Server Token = ${cluster_token}"
 
+# TODO: update port number for additional clusters (read existing port numbers with regex and +1 to max port number)
+
 echo "# Copying cluster files"
 sudo cp -r "${SCRIPT_DIR}/cluster_config" "${SETTINGS_DIR}/${cluster_name}"
 
@@ -52,6 +54,8 @@ sudo sed -i -e "s/XXX_SERVER_NAME_XXX/${server_name}/g" \
 
 sudo chown -R dst:dst "${SETTINGS_DIR}/${cluster_name}"
 
+# TODO: replace this with starting an editor to edit the relevant files since copy pasting a config is easier than adding them one at a time.
+
 echo "# Installing mods"
 "${SCRIPT_DIR}/install_mods.sh"
 
@@ -60,7 +64,6 @@ echo ""
 echo -n "Would you like to start this cluster when the machine boots? (y/n): "
 read answer
 if [[ "${answer}" == "y" ]]; then
-
   echo "Creating /etc/systemd/system/dst-${cluster_name}-Master.service"
   sed -e "s/XXX_CLUSTER_NAME_XXX/${cluster_name}/g" -e "s/XXX_SHARD_XXX/Master/g" "${SCRIPT_DIR}/systemd/dst.service" | sudo tee "/etc/systemd/system/dst-${cluster_name}-Master.service" >/dev/null
   echo "Creating /etc/systemd/system/dst-${cluster_name}-Caves.service"
