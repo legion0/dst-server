@@ -9,11 +9,15 @@ DST_STEAM_APP_ID="343050"
 DST_INSTALL_DIR="/home/dst/steamapps/dst"
 STEAMCMD_PATH="/usr/games/steamcmd"
 
-echo "Select Cluster Name:"
-select cluster_name in $(sudo ls "${SETTINGS_DIR}"); do
-  sudo test -n "${cluster_name}" && break;
-  echo ">>> Invalid Selection"; 
-done
+if [[ "$(sudo ls "${SETTINGS_DIR}" | wc -l)" == "1" ]]; then
+  cluster_name="$(sudo ls "${SETTINGS_DIR}")"
+else
+    echo "Select Cluster Name:"
+    select cluster_name in $(sudo ls "${SETTINGS_DIR}"); do
+    sudo test -n "${cluster_name}" && break;
+    echo ">>> Invalid Selection"; 
+    done
+fi
 
 [[ "$(systemctl list-units --all --quiet dst-${cluster_name}-Master.service dst-${cluster_name}-Caves.service | wc -l)" == "2" ]] || {
     echo "Failed to find services" >&2
