@@ -22,6 +22,7 @@ echo "cluster_name=${cluster_name}"
 
 [[ "$(systemctl list-units --all --quiet dst-${cluster_name}-Master.service dst-${cluster_name}-Caves.service | wc -l)" == "2" ]] || {
     echo "Failed to find services" >&2
+    systemctl list-units --all dst-${cluster_name}-Master.service dst-${cluster_name}-Caves.service
     exit 1
 }
 
