@@ -2,8 +2,12 @@
 
 set -euo pipefail
 
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+
 [[ "${USER}" == "dst" ]] || {
     echo "WARNING: Not user dst, running with sudo"
+    sudo cp "${SCRIPT_DIR}/dst_update.sh" "/home/dst/dst_update.sh"
+    sudo chown dst:dst "/home/dst/dst_update.sh"
     sudo -u dst /bin/bash -c '~/dst_update.sh'
     exit $?
 }

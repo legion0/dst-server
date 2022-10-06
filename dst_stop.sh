@@ -20,14 +20,9 @@ done
     exit 1
 }
 
-! systemctl is-active --quiet "dst-${cluster_name}-Master.service" "dst-${cluster_name}-Caves.service" || {
-  echo "One or more services already running" >&2
-    exit 1
-}
-
 "${SCRIPT_DIR}/dst_update.sh"
 
-sudo systemctl start "dst-${cluster_name}-Master.service" "dst-${cluster_name}-Caves.service"
+sudo systemctl stop "dst-${cluster_name}-Master.service" "dst-${cluster_name}-Caves.service"
 
 # CLUSTER_ID="XXX_CLUSTER_NAME_XXX"
 
