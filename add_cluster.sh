@@ -8,7 +8,7 @@ SETTINGS_DIR="/home/dst/.klei/DoNotStarveTogether"
 
 echo -n "Game Server Name: (default: ${USER} DST Server)"
 read server_name
-server_name="${cluster_name:="${USER} DST Server"}"
+server_name="${server_name:="${USER} DST Server"}"
 echo "Game Server Name = ${server_name}"
 
 cluster_name_def="$(echo "${server_name}" | tr --complement --delete '[:alnum:]')"

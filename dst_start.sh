@@ -24,4 +24,5 @@ echo "cluster_name=${cluster_name}"
 set -x
 # TODO: make backup of modsettings before update since update overwrites modsettings
 # "${SCRIPT_DIR}/dst_update.sh"
+
 sudo systemctl start "dst-${cluster_name}-Master.service" "dst-${cluster_name}-Caves.service"
