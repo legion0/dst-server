@@ -4,9 +4,6 @@ set -euo pipefail
 
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
-# DST_STEAM_APP_ID="343050"
-# DST_INSTALL_DIR="/home/dst/steamapps/dst"
-# STEAMCMD_PATH="/usr/games/steamcmd"
 SETTINGS_DIR="/home/dst/.klei/DoNotStarveTogether"
 
 echo -n "Game Server Name: (default: ${USER} DST Server)"
@@ -56,19 +53,32 @@ sudo chown -R dst:dst "${SETTINGS_DIR}/${cluster_name}"
 
 # TODO: replace this with starting an editor to edit the relevant files since copy pasting a config is easier than adding them one at a time.
 
-echo "# Installing mods"
-"${SCRIPT_DIR}/install_mods.sh"
+echo ""
+echo -n "Would you like to install mods? (y/n): "
+read answer
+if [[ "${answer}" == "y" ]]; then
+  echo "# Installing mods"
+  "${SCRIPT_DIR}/install_mods.sh"
+fi
 
 echo "# Registering with systemd"
 echo ""
-echo -n "Would you like to start this cluster when the machine boots? (y/n): "
-read answer
-if [[ "${answer}" == "y" ]]; then
   echo "Creating /etc/systemd/system/dst-${cluster_name}-Master.service"
   sed -e "s/XXX_CLUSTER_NAME_XXX/${cluster_name}/g" -e "s/XXX_SHARD_XXX/Master/g" "${SCRIPT_DIR}/systemd/dst.service" | sudo tee "/etc/systemd/system/dst-${cluster_name}-Master.service" >/dev/null
   echo "Creating /etc/systemd/system/dst-${cluster_name}-Caves.service"
   sed -e "s/XXX_CLUSTER_NAME_XXX/${cluster_name}/g" -e "s/XXX_SHARD_XXX/Caves/g" "${SCRIPT_DIR}/systemd/dst.service" | sudo tee "/etc/systemd/system/dst-${cluster_name}-Caves.service" >/dev/null
+echo ""
+echo -n "Would you like to start this cluster when the machine boots? (y/n): "
+read answer
+if [[ "${answer}" == "y" ]]; then
   echo "Enabling services on startup"
-  sudo systemctl enable dst-${cluster_name}-Master.service dst-${cluster_name}-Caves.service
-  sudo systemctl start "dst-${cluster_name}.slice"
+  sudo systemctl enable "dst-${cluster_name}-Master.service" "dst-${cluster_name}-Caves.service"
+fi
+
+echo ""
+echo -n "Start this cluster now? (y/n): "
+read answer
+if [[ "${answer}" == "y" ]]; then
+  echo "Starting cluster now"
+  sudo systemctl start "dst-${cluster_name}-Master.service" "dst-${cluster_name}-Caves.service"
 fi
